@@ -1,15 +1,16 @@
 {
-  "name": "todolist-v1",
-  "version": "1.0.0",
-  "description": "todolist",
-  "main": "app.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "Mike",
-  "license": "ISC",
-  "dependencies": {
-    "ejs": "^3.1.7",
-    "express": "^4.17.3"
-  }
+    "name": "todolist-v1",
+    "version": "1.0.0",
+    "description": "todolist",
+    "main": "app.js",
+    "scripts": {
+        "start": "node app.js",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "Mike",
+    "license": "ISC",
+    "dependencies": {
+        "ejs": "^3.1.7",
+        "express": "^4.17.3"
+    }
 }
