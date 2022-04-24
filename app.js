@@ -8,8 +8,8 @@ app.use(express.static("public"));
 
 const port = process.env.PORT || 3000;
 
-let items = [];
-let workItems = [];
+const items = [];
+const workItems = [];
 
 app.route("/")
     .get((req, res) => {
