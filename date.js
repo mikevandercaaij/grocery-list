@@ -1,21 +1,25 @@
-exports.getDate = () => {
-    const today = new Date();
-
-    const options = {
-        weekday: "long",
-        day: "numeric",
-        month: "long",
-    };
-
-    return today.toLocaleDateString("en-US", options);
-};
-
 exports.getDay = () => {
     const today = new Date();
-
     const options = {
         weekday: "long",
     };
 
-    return today.toLocaleDateString("en-US", options);
+    const day = today.toLocaleDateString("en-US", options);
+
+    switch (day) {
+        case "Monday":
+            return "Maandag";
+        case "Tuesday":
+            return "Dinsdag";
+        case "Wednesday":
+            return "Woensdag";
+        case "Thursday":
+            return "Donderdag";
+        case "Friday":
+            return "Vrijdag";
+        case "Saturday":
+            return "Zaterdag";
+        case "Sunday":
+            return "Zondag";
+    }
 };
