@@ -11,7 +11,7 @@ app.use(express.static("public"));
 
 const port = process.env.PORT || 3000;
 
-mongoose.connect("mongodb://127.0.0.1:27017/todolistDB");
+mongoose.connect("mongodb://admin:geheim@cluster0-shard-00-00.0544c.mongodb.net:27017,cluster0-shard-00-01.0544c.mongodb.net:27017,cluster0-shard-00-02.0544c.mongodb.net:27017/todolistDB?ssl=true&replicaSet=atlas-twc4ba-shard-0&authSource=admin&retryWrites=true&w=majority");
 
 const itemsSchema = new mongoose.Schema({
     name: {
@@ -87,11 +87,7 @@ app.post("/delete", (req, res) => {
     const listName = req.body.listName;
 
     if (listName === "Boodschappenlijst") {
-        Item.findByIdAndRemove(checkedItemId, (err) => {
-            if (!err) {
-                console.log("Deleted: " + checkedItemId);
-            }
-        });
+        Item.findByIdAndRemove(checkedItemId, (err) => {});
         res.redirect("/");
     } else {
         List.findOneAndUpdate({ name: listName }, { $pull: { items: { _id: checkedItemId } } }, (err, result) => {
@@ -111,14 +107,14 @@ app.get("/:customListName", (req, res) => {
                 //Create a new list
                 const list = new List({
                     name: customListName,
-                    items: defaultItems,
+                    items: [],
                 });
 
                 list.save();
 
                 res.redirect(`/${customListName}`);
             } else {
-                //Show an existing list
+                //Show the existing list
                 res.render("list", { listTitle: result.name, listItems: result.items });
             }
         }
