@@ -1,7 +1,5 @@
 const express = require("express");
-const { redirect } = require("express/lib/response");
 const mongoose = require("mongoose");
-const { list } = require("pm2");
 const _ = require("lodash");
 const app = express();
 
