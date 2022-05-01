@@ -1,4 +1,4 @@
-name: Heroku todolist
+name: Heroku grocery list
 
 on:
   push:
