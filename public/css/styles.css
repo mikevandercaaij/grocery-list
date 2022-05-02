@@ -91,6 +91,11 @@ button {
     font-size: 24px;
 }
 
+.fa-solid,
+.fas {
+    margin-top: 3px;
+}
+
 input[type="text"] {
     text-align: center;
     height: 60px;
