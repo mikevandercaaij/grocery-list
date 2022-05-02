@@ -9,11 +9,14 @@ app.use(express.static("public"));
 
 const port = process.env.PORT || 3000;
 
-mongoose.connect("mongodb://admin:geheim@cluster0-shard-00-00.0544c.mongodb.net:27017,cluster0-shard-00-01.0544c.mongodb.net:27017,cluster0-shard-00-02.0544c.mongodb.net:27017/todolistDB?ssl=true&replicaSet=atlas-twc4ba-shard-0&authSource=admin&retryWrites=true&w=majority");
+mongoose.connect("mongodb://admin:geheim@cluster0-shard-00-00.0544c.mongodb.net:27017,cluster0-shard-00-01.0544c.mongodb.net:27017,cluster0-shard-00-02.0544c.mongodb.net:27017/groceriesDB?ssl=true&replicaSet=atlas-twc4ba-shard-0&authSource=admin&retryWrites=true&w=majority");
 
 const itemsSchema = new mongoose.Schema({
     name: {
         type: String,
+    },
+    isChecked: {
+        type: Boolean,
     },
 });
 
@@ -24,12 +27,19 @@ let addDefault = true;
 const defaultItems = [
     {
         name: "Welkom bij jouw boodschappenlijstje!",
+        isChecked: true,
     },
     {
         name: "Klik op de + (rechtsonder) om iets aan de lijst toe te voegen.",
+        isChecked: false,
     },
     {
-        name: "<-- Klik op het vakje om een boodschap te verwijderen",
+        name: "<-- Klik op het vakje om een boodschap door te strepen",
+        isChecked: false,
+    },
+    {
+        name: "Klik op de prullenbak om een boodschap te verwijderen -->",
+        isChecked: false,
     },
 ];
 
@@ -62,6 +72,7 @@ app.route("/")
 
         const newItem = new Item({
             name: item,
+            isChecked: false,
         });
 
         if (listName === "Boodschappenlijst") {
@@ -80,15 +91,64 @@ app.route("/")
         }
     });
 
-app.post("/delete", (req, res) => {
-    const checkedItemId = req.body.checkbox;
+app.post("/check", (req, res) => {
+    const itemId = req.body.itemID;
     const listName = req.body.listName;
 
     if (listName === "Boodschappenlijst") {
-        Item.findByIdAndRemove(checkedItemId, (err) => {});
+        Item.findOne({ _id: itemId }, (err, item) => {
+            if (!err) {
+                item;
+
+                if (item.isChecked) {
+                    item.isChecked = false;
+                    item.save();
+                } else {
+                    item.isChecked = true;
+                    item.save();
+                }
+
+                setTimeout(() => {
+                    res.redirect("/");
+                }, 100);
+            }
+        });
+    } else {
+        List.findOne({ name: listName }, (err, list) => {
+            if (!err) {
+                list.items.forEach((item) => {
+                    if (item._id.toString() == itemId) {
+                        switch (item.isChecked) {
+                            case true:
+                                item.isChecked = false;
+                                break;
+                            case false:
+                                console.log(item);
+
+                                item.isChecked = true;
+                                break;
+                        }
+                        list.save();
+                    }
+                });
+
+                setTimeout(() => {
+                    res.redirect("/" + listName);
+                }, 100);
+            }
+        });
+    }
+});
+
+app.post("/delete", (req, res) => {
+    const itemId = req.body.itemID;
+    const listName = req.body.listName;
+
+    if (listName === "Boodschappenlijst") {
+        Item.findByIdAndRemove(itemId, (err) => {});
         res.redirect("/");
     } else {
-        List.findOneAndUpdate({ name: listName }, { $pull: { items: { _id: checkedItemId } } }, (err, result) => {
+        List.findOneAndUpdate({ name: listName }, { $pull: { items: { _id: itemId } } }, (err, result) => {
             if (!err) {
                 res.redirect("/" + listName);
             }

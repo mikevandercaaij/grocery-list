@@ -6,17 +6,26 @@
 
 <div class="box">
     <% listItems.forEach(item => { %>
-    <form action="/delete" method="post">
+    <form action="/check" method="post">
         <div class="item">
-            <input type="checkbox" name="checkbox" value="<%=item._id%>" onChange="this.form.submit()" />
+            <% if(item.isChecked) { %>
+                <input type="checkbox" name="checkbox" value="true" onchange="this.form.submit()" checked/>
+            <% } else { %>
+                <input type="checkbox" name="checkbox" value="true" onchange="this.form.submit()" />
+            <% } %>
+            
             <p><%= item.name %></p>
+
+            <button type="submit" formaction="/delete"><i class="fa fa-trash" aria-hidden="true" ></i></button>
         </div>
+        <input type="hidden" name="itemID" value="<%=item._id%>">
         <input type="hidden" name="listName" value="<%=listTitle%>" />
+
     </form>
     <% }) %>
     <form class="item" action="/" method="post">
         <input placeholder="Vul hier de naam in" name="newItem" type="text" autocomplete="off" />
-        <button type="submit" name="list" value="<%=listTitle%>">+</button>
+        <button class="add" type="submit" name="list" value="<%=listTitle%>">+</button>
     </form>
 </div>
 
