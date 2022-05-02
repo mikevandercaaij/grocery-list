@@ -123,8 +123,6 @@ app.post("/check", (req, res) => {
                                 item.isChecked = false;
                                 break;
                             case false:
-                                console.log(item);
-
                                 item.isChecked = true;
                                 break;
                         }

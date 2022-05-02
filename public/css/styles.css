@@ -63,14 +63,18 @@ form.item {
 }
 
 button.add {
-    min-height: 50px;
-    width: 50px;
-    border-radius: 50%;
+    height: 50px;
+    width: 61px;
+    border-radius: 5px;
     border-color: transparent;
     background-color: #a683e3;
     color: #fff;
     font-size: 40px;
     border-width: 0;
+    padding: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 button {
@@ -79,6 +83,12 @@ button {
     color: #fff;
     margin: 20px;
     border-radius: 5px;
+}
+
+.fa,
+.fa-trash {
+    margin: 12px;
+    font-size: 24px;
 }
 
 input[type="text"] {
@@ -108,8 +118,21 @@ footer {
     text-align: center;
 }
 
-.fa,
-.fa-trash {
-    margin: 12px;
-    font-size: 24px;
+@media only screen and (max-width: 450px) {
+    .box {
+        width: 100%;
+    }
+
+    .box p {
+        font-size: 16px;
+    }
+
+    input[type="text"] {
+        width: 100%;
+        font-size: 16px;
+    }
+
+    button.add {
+        width: 71px;
+    }
 }
