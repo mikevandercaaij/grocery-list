@@ -30,7 +30,7 @@ h1 {
 }
 
 .item {
-    min-height: 70px;
+    /* min-height: 70px; */
     display: flex;
     align-items: center;
     border-bottom: 1px solid #f1f1f1;
@@ -81,7 +81,7 @@ button {
     background-color: #a683e3;
     border-width: 0;
     color: #fff;
-    margin: 20px;
+    margin: 5px;
     border-radius: 5px;
 }
 
