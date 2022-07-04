@@ -61,6 +61,10 @@ app.route("/")
                     addDefault = false;
                     res.redirect("/");
                 } else {
+                    // foundItems.forEach((item) => {
+                    //     console.log(item.name);
+                    // });
+                    foundItems.sort((a, b) => a.name.localeCompare(b.name));
                     res.render("list", { listTitle: "Boodschappenlijst", listItems: foundItems });
                 }
             }
