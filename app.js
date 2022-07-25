@@ -50,6 +50,7 @@ const listSchema = {
 
 const List = mongoose.model("List", listSchema);
 
+//homeroute
 app.route("/")
     .get((req, res) => {
         Item.find({}, (err, foundItems) => {
@@ -95,6 +96,7 @@ app.route("/")
         }
     });
 
+//check items checkbox
 app.post("/check", (req, res) => {
     const itemId = req.body.itemID;
     const listName = req.body.listName;
@@ -142,6 +144,7 @@ app.post("/check", (req, res) => {
     }
 });
 
+//remove item
 app.post("/delete", (req, res) => {
     const itemId = req.body.itemID;
     const listName = req.body.listName;
@@ -158,6 +161,7 @@ app.post("/delete", (req, res) => {
     }
 });
 
+//different lists based on url
 app.get("/:customListName", (req, res) => {
     const customListName = _.capitalize(req.params.customListName);
 
